@@ -174,6 +174,29 @@
 
   footer{background:var(--nacht);color:#cfd3da;text-align:center;padding:2rem 1rem;font-size:.85rem}
   footer a{color:var(--rosa);margin:0 .5rem}
+
+  /* ---------- Galerie: Vorschau + Lightbox ---------- */
+.more-btn{
+  margin-top:.9rem;background:var(--petrol);color:#fff;border:none;border-radius:999px;
+  padding:.6rem 1.4rem;font-family:'Quicksand',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;
+}
+.more-btn:hover{background:#0e4257}
+.photo{cursor:pointer}
+.lightbox{
+  position:fixed;inset:0;background:rgba(43,46,53,.93);z-index:100;
+  display:none;align-items:center;justify-content:center;flex-direction:column;gap:.8rem;padding:1rem;
+}
+.lightbox.open{display:flex}
+.lightbox img{max-width:92vw;max-height:75vh;border-radius:10px}
+.lightbox .lb-cap{color:#fff;font-weight:600;text-align:center}
+.lb-btn{
+  position:absolute;background:none;border:none;color:#fff;
+  font-size:2.4rem;cursor:pointer;padding:.4rem 1rem;line-height:1;
+}
+.lb-close{top:.6rem;right:.8rem}
+.lb-prev{left:.3rem;top:50%;transform:translateY(-50%)}
+.lb-next{right:.3rem;top:50%;transform:translateY(-50%)}
+  
 </style>
 </head>
 <body>
@@ -273,6 +296,8 @@
     
   </div>
 </section>
+
+  
 
 <!-- ================= BEITRITT ================= -->
 <section id="beitritt">
@@ -430,25 +455,80 @@ const grid = document.getElementById("event-grid");
   grid.appendChild(card);
 });
 
-/* Galerie */
+/* Galerie – Vorschau (max. 4 Fotos) + Lightbox */
 const root = document.getElementById("gallery-root");
-EVENTS.filter(ev => ev.date < today).forEach(ev => {
-  const block = document.createElement("div");
-  block.className = "gallery-block";
-  const photos = ev.photos.length
-    ? ev.photos.map(p => `
-        <figure class="photo">
-          <img src="${p.src}" alt="${p.caption}" loading="lazy">
-          <figcaption class="cap">${p.caption}</figcaption>
-        </figure>`).join("")
-    : [1, 2, 3, 4].map(i => `
-        <div class="photo placeholder">
-          <span class="cap">Foto ${i} – eigenes Bild einfügen (ohne Gesichter)</span>
-        </div>`).join("");
-  block.innerHTML = `<h3>${ev.title}</h3><div class="photo-grid">${photos}</div>`;
-  root.appendChild(block);
+const PREVIEW = 4;
+let lbPhotos = [], lbIndex = 0;
+
+const lb = document.createElement("div");
+lb.className = "lightbox";
+lb.innerHTML = `
+  <button class="lb-btn lb-close" aria-label="Schließen">✕</button>
+  <button class="lb-btn lb-prev" aria-label="Zurück">‹</button>
+  <img alt="">
+  <div class="lb-cap"></div>
+  <button class="lb-btn lb-next" aria-label="Weiter">›</button>`;
+document.body.appendChild(lb);
+const lbImg = lb.querySelector("img"), lbCap = lb.querySelector(".lb-cap");
+
+function showLb(i){
+  lbIndex = (i + lbPhotos.length) % lbPhotos.length;
+  lbImg.src = lbPhotos[lbIndex].src;
+  lbImg.alt = lbCap.textContent = lbPhotos[lbIndex].caption || "";
+  lb.classList.add("open");
+}
+lb.querySelector(".lb-close").onclick = () => lb.classList.remove("open");
+lb.querySelector(".lb-prev").onclick = () => showLb(lbIndex - 1);
+lb.querySelector(".lb-next").onclick = () => showLb(lbIndex + 1);
+lb.onclick = e => { if (e.target === lb) lb.classList.remove("open"); };
+document.addEventListener("keydown", e => {
+  if (!lb.classList.contains("open")) return;
+  if (e.key === "Escape") lb.classList.remove("open");
+  if (e.key === "ArrowLeft") showLb(lbIndex - 1);
+  if (e.key === "ArrowRight") showLb(lbIndex + 1);
 });
 
+[...EVENTS].filter(ev => ev.date < today)
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .forEach(ev => {
+    const block = document.createElement("div");
+    block.className = "gallery-block";
+    const h = document.createElement("h3");
+    h.textContent = ev.title;
+    const pgrid = document.createElement("div");
+    pgrid.className = "photo-grid";
+    block.append(h, pgrid);
+
+    if (!ev.photos.length) {
+      pgrid.innerHTML = [1, 2, 3, 4].map(i => `
+        <div class="photo placeholder"><span class="cap">Foto ${i} – eigenes Bild einfügen</span></div>`).join("");
+    } else {
+      ev.photos.forEach((p, i) => {
+        const fig = document.createElement("figure");
+        fig.className = "photo";
+        fig.innerHTML = `<img src="${p.src}" alt="${p.caption}" loading="lazy">
+                         <figcaption class="cap">${p.caption}</figcaption>`;
+        if (i >= PREVIEW) fig.style.display = "none";
+        fig.addEventListener("click", () => { lbPhotos = ev.photos; showLb(i); });
+        pgrid.appendChild(fig);
+      });
+      if (ev.photos.length > PREVIEW) {
+        const btn = document.createElement("button");
+        btn.className = "more-btn";
+        btn.textContent = `Alle ${ev.photos.length} Fotos anzeigen`;
+        btn.onclick = () => {
+          const collapsed = [...pgrid.querySelectorAll(".photo")].some(f => f.style.display === "none");
+          pgrid.querySelectorAll(".photo").forEach((f, i) => {
+            if (i >= PREVIEW) f.style.display = collapsed ? "" : "none";
+          });
+          btn.textContent = collapsed ? "Weniger anzeigen" : `Alle ${ev.photos.length} Fotos anzeigen`;
+        };
+        block.appendChild(btn);
+      }
+    }
+    root.appendChild(block);
+  });
+  
 /* Leihgeräte */
 const lend = document.getElementById("lend-grid");
 LEIHGERAETE.forEach(g => {
