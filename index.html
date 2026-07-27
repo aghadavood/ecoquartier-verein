@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemeinsam im ecoQuartier Pfaffenhofen e.V.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Caveat:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rot:#E8433F;
+    --himmel:#C4E2F0;
+    --himmel-hell:#E4F2F9;
+    --petrol:#17647F;
+    --rosa:#F5B7BC;
+    --creme:#FFF9F1;
+    --nacht:#2B2E35;
+    --amber:#F7C46C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Quicksand',sans-serif;color:var(--nacht);background:var(--creme);line-height:1.6}
+  a{color:var(--petrol)}
+  img{max-width:100%;display:block}
+
+  /* ---------- Navigation ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;background:var(--creme);
+    border-bottom:3px solid var(--rot);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.6rem 1.2rem;flex-wrap:wrap;gap:.5rem;
+  }
+  .nav-brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+  .nav-brand span{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--petrol)}
+  .logo-badge{width:42px;height:42px;flex:none}
+  nav ul{display:flex;gap:1rem;list-style:none;flex-wrap:wrap}
+  nav ul a{
+    text-decoration:none;font-weight:600;font-size:.9rem;color:var(--nacht);
+    padding:.2rem .1rem;border-bottom:2px solid transparent;
+  }
+  nav ul a:hover,nav ul a:focus-visible{border-bottom-color:var(--rot);outline:none}
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    background:linear-gradient(180deg,var(--himmel) 0%,var(--himmel-hell) 100%);
+    text-align:center;padding:0 1rem 4rem;position:relative;overflow:hidden;
+  }
+  .bunting{width:100%;max-width:1100px;margin:0 auto;display:block}
+  .bunting polygon{transform-origin:top center;animation:sway 5s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:rotate(0deg)}50%{transform:rotate(2.5deg)}}
+  @media (prefers-reduced-motion:reduce){.bunting polygon{animation:none}}
+  .hero-logo{width:110px;height:110px;margin:1.4rem auto .4rem}
+  .hero-script{font-family:'Caveat',cursive;font-size:clamp(1.5rem,4vw,2.2rem);color:var(--petrol);font-weight:700}
+  .hero h1{
+    font-family:'Rubik Dirt',system-ui;font-size:clamp(2.2rem,7.5vw,5rem);
+    color:var(--rot);letter-spacing:.02em;line-height:1.05;
+    margin:.3rem 0 1rem;text-transform:uppercase;
+  }
+  .hero p.sub{max-width:34rem;margin:0 auto 2rem;font-size:1.08rem;font-weight:500}
+  .btn{
+    display:inline-block;background:var(--rot);color:#fff;font-weight:700;
+    text-decoration:none;padding:.85rem 1.8rem;border-radius:999px;
+    box-shadow:0 4px 0 #b52f2c;transition:transform .15s ease;margin:.25rem;
+  }
+  .btn:hover,.btn:focus-visible{transform:translateY(-2px);outline:none}
+  .btn.alt{background:var(--petrol);box-shadow:0 4px 0 #0e4257}
+
+  /* ---------- Sections ---------- */
+  section{padding:4rem 1.2rem}
+  .wrap{max-width:1000px;margin:0 auto}
+  .stamp{
+    display:inline-block;font-family:'Rubik Dirt',system-ui;text-transform:uppercase;
+    font-size:clamp(1.5rem,4vw,2.2rem);color:var(--rot);background:var(--rosa);
+    padding:.15em .5em;transform:rotate(-1.5deg);margin-bottom:1.6rem;
+  }
+  section:nth-of-type(even){background:var(--himmel-hell)}
+
+  /* ---------- Über uns ---------- */
+  .about{display:grid;gap:2rem;grid-template-columns:1.4fr 1fr;align-items:start}
+  .about-text p{margin-bottom:1rem;font-size:1.02rem}
+  .facts{background:#fff;border-radius:18px;padding:1.4rem;box-shadow:0 6px 18px rgba(23,100,127,.12)}
+  .facts h3{font-family:'Caveat',cursive;font-size:1.7rem;color:var(--petrol);margin-bottom:.6rem}
+  .facts li{margin-left:1.2rem;margin-bottom:.4rem;font-size:.95rem}
+  @media(max-width:720px){.about{grid-template-columns:1fr}}
+
+  /* ---------- Events ---------- */
+  .event-grid{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .event-card{
+    background:#fff;border-radius:18px;overflow:hidden;
+    box-shadow:0 6px 18px rgba(23,100,127,.12);display:flex;flex-direction:column;
+  }
+  .event-card .banner{
+    background:var(--rot);color:#fff;font-family:'Rubik Dirt',system-ui;
+    text-transform:uppercase;font-size:1.25rem;padding:.8rem 1.2rem;letter-spacing:.03em;
+  }
+  .event-card.past .banner{background:var(--petrol)}
+  .event-body{padding:1.2rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
+  .meta{display:flex;gap:.5rem;align-items:baseline;font-weight:700;font-size:.92rem}
+  .meta .label{
+    background:var(--rosa);color:var(--rot);font-family:'Rubik Dirt',system-ui;
+    font-size:.78rem;padding:.05em .45em;text-transform:uppercase;white-space:nowrap;
+  }
+  .event-body p{font-size:.94rem}
+  .tag-past{align-self:flex-start;margin-top:auto;font-family:'Caveat',cursive;font-size:1.2rem;color:var(--petrol);font-weight:700}
+
+  /* ---------- Gallery ---------- */
+  .gallery-note{
+    background:var(--rosa);border-radius:12px;padding:.9rem 1.1rem;
+    font-size:.93rem;margin-bottom:1.6rem;
+  }
+  .gallery-block{margin-bottom:2.6rem}
+  .gallery-block h3{font-family:'Caveat',cursive;font-size:1.8rem;color:var(--petrol);margin-bottom:1rem}
+  .photo-grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+  .photo{
+    aspect-ratio:4/3;border-radius:12px;overflow:hidden;position:relative;
+    display:flex;align-items:flex-end;background:linear-gradient(135deg,var(--himmel),var(--rosa));
+  }
+  .photo img{width:100%;height:100%;object-fit:cover}
+  .photo .cap{
+    position:absolute;inset-inline:0;bottom:0;background:rgba(43,46,53,.65);
+    color:#fff;font-size:.76rem;padding:.3rem .6rem;font-weight:600;
+  }
+  .photo.placeholder .cap{background:rgba(23,100,127,.75)}
+  code{background:#fff;border-radius:6px;padding:.1em .4em;font-size:.85em}
+
+  /* ---------- Beitritt ---------- */
+  .join{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .join-card{
+    background:#fff;border-radius:18px;padding:1.6rem;
+    box-shadow:0 6px 18px rgba(23,100,127,.12);display:flex;flex-direction:column;gap:.7rem;
+  }
+  .join-card h3{font-family:'Caveat',cursive;font-size:1.8rem;color:var(--petrol)}
+  .price{font-family:'Rubik Dirt',system-ui;font-size:2rem;color:var(--rot)}
+  .price small{font-family:'Quicksand',sans-serif;font-size:.9rem;color:var(--nacht);font-weight:600}
+  .join-card ul{margin-left:1.2rem;font-size:.94rem}
+  .join-card .btn{align-self:flex-start;margin-top:auto}
+
+  /* ---------- Leihgeräte ---------- */
+  .lend-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+  .lend-card{
+    background:#fff;border-radius:14px;padding:1rem 1.2rem;
+    box-shadow:0 4px 12px rgba(23,100,127,.1);
+    display:flex;gap:.8rem;align-items:flex-start;
+  }
+  .lend-card .icon{font-size:1.7rem;line-height:1.2}
+  .lend-card h4{font-size:1rem}
+  .lend-card p{font-size:.86rem}
+  .lend-hint{margin-top:1.4rem;font-size:.95rem}
+
+  /* ---------- Spenden ---------- */
+  .donate{
+    background:var(--petrol);color:#fff;border-radius:22px;padding:2.2rem;
+    display:grid;gap:1.6rem;grid-template-columns:1.2fr 1fr;align-items:center;
+  }
+  .donate h3{font-family:'Caveat',cursive;font-size:2rem;color:var(--rosa);margin-bottom:.5rem}
+  .donate p{font-size:.97rem}
+  .bank{
+    background:#fff;color:var(--nacht);border-radius:14px;padding:1.3rem;
+    font-size:.95rem;box-shadow:inset 0 0 0 3px var(--rosa);
+  }
+  .bank dt{font-family:'Rubik Dirt',system-ui;font-size:.75rem;text-transform:uppercase;color:var(--rot);margin-top:.6rem}
+  .bank dt:first-child{margin-top:0}
+  .bank dd{font-weight:700;letter-spacing:.02em}
+  @media(max-width:720px){.donate{grid-template-columns:1fr}}
+
+  /* ---------- Kontakt ---------- */
+  .contact-card{
+    background:#fff;border-radius:22px;padding:2rem;
+    box-shadow:0 6px 18px rgba(23,100,127,.12);
+    display:grid;gap:1.4rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  }
+  .contact-card h3{font-family:'Caveat',cursive;font-size:1.8rem;color:var(--petrol)}
+  .contact-card p{font-size:.96rem}
+
+  footer{background:var(--nacht);color:#cfd3da;text-align:center;padding:2rem 1rem;font-size:.85rem}
+  footer a{color:var(--rosa);margin:0 .5rem}
+</style>
+</head>
+<body>
+
+<nav aria-label="Hauptnavigation">
+  <a class="nav-brand" href="#top">
+    <svg class="logo-badge" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="48" fill="#17647F"/>
+      <path d="M15,38 Q50,55 85,38" fill="none" stroke="#FFF9F1" stroke-width="2.5"/>
+      <polygon points="28,41 38,42 33,55" fill="#F5B7BC"/>
+      <polygon points="46,45 56,45 51,58" fill="#E8433F"/>
+      <polygon points="64,42 74,41 69,54" fill="#F7C46C"/>
+      <text x="50" y="82" text-anchor="middle" font-family="Caveat,cursive" font-size="22" font-weight="700" fill="#FFF9F1">eQ</text>
+    </svg>
+    <span>Gemeinsam im ecoQuartier</span>
+  </a>
+  <ul>
+    <li><a href="#ueber-uns">Über uns</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#galerie">Fotos</a></li>
+    <li><a href="#beitritt">Mitglied werden</a></li>
+    <li><a href="#leihgeraete">Leihgeräte</a></li>
+    <li><a href="#spenden">Spenden</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <svg class="bunting" viewBox="0 0 1100 90" aria-hidden="true">
+    <path d="M0,15 Q550,60 1100,15" fill="none" stroke="#8a8f98" stroke-width="2"/>
+    <g>
+      <polygon points="60,22 100,26 80,72" fill="#F5B7BC"/>
+      <polygon points="170,29 210,33 190,79" fill="#9DBEDC"/>
+      <polygon points="280,35 320,38 300,84" fill="#F2D8B8"/>
+      <polygon points="390,39 430,41 410,87" fill="#E8433F"/>
+      <polygon points="500,41 540,42 520,88" fill="#CFE0D2"/>
+      <polygon points="610,41 650,40 630,86" fill="#F5B7BC"/>
+      <polygon points="720,38 760,36 740,82" fill="#9DBEDC"/>
+      <polygon points="830,34 870,31 850,77" fill="#F7C46C"/>
+      <polygon points="940,28 980,24 960,70" fill="#E8433F"/>
+    </g>
+  </svg>
+
+  <!-- LOGO: Platzhalter-SVG – gegen echtes Logo tauschen: <img src="logo.png" class="hero-logo" alt="Vereinslogo"> -->
+  <svg class="hero-logo" viewBox="0 0 100 100" role="img" aria-label="Vereinslogo (Platzhalter)">
+    <circle cx="50" cy="50" r="48" fill="#17647F"/>
+    <path d="M15,38 Q50,55 85,38" fill="none" stroke="#FFF9F1" stroke-width="2.5"/>
+    <polygon points="28,41 38,42 33,55" fill="#F5B7BC"/>
+    <polygon points="46,45 56,45 51,58" fill="#E8433F"/>
+    <polygon points="64,42 74,41 69,54" fill="#F7C46C"/>
+    <text x="50" y="82" text-anchor="middle" font-family="Caveat,cursive" font-size="22" font-weight="700" fill="#FFF9F1">eQ</text>
+  </svg>
+
+  <p class="hero-script">Liebe Bewohnerinnen und Bewohner des ecoQuartiers,</p>
+  <h1>Gemeinsam<br>im ecoQuartier</h1>
+  <p class="sub">Wir sind der Nachbarschaftsverein „Gemeinsam im ecoQuartier Pfaffenhofen e.V." – wir feiern, gärtnern, teilen und gestalten unser Quartier zusammen.</p>
+  <a class="btn" href="#events">Aktuelle Events</a><a class="btn alt" href="#beitritt">Mitglied werden</a>
+</header>
+
+<!-- ================= ÜBER UNS ================= -->
+<section id="ueber-uns">
+  <div class="wrap">
+    <span class="stamp">Wer wir sind</span>
+    <div class="about">
+      <div class="about-text">
+        <!-- VORSTELLUNGSTEXT: Platzhalter – gern durch euren eigenen Text ersetzen -->
+        <p>Der Verein „Gemeinsam im ecoQuartier Pfaffenhofen e.V." bringt die Nachbarschaft im ecoQuartier zusammen. Wir organisieren Feste, Pflanzaktionen und Treffen, teilen Geräte miteinander und sorgen dafür, dass aus Nachbarn Freunde werden.</p>
+        <p>Ob Sommerfest am Vorplatz Planetenhaus, gemeinsames Gärtnern oder spontane Hilfe unter Nachbarn – bei uns kann jede und jeder mitmachen. Neue Gesichter und neue Ideen sind immer willkommen!</p>
+      </div>
+      <div class="facts">
+        <h3>Auf einen Blick</h3>
+        <ul>
+          <li>Nachbarschaftsverein im ecoQuartier Pfaffenhofen</li>
+          <li>Feste, Aktionen &amp; gegenseitige Hilfe</li>
+          <li>Geräteverleih für Mitglieder</li>
+          <li>Offen für alle Bewohnerinnen und Bewohner</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EVENTS ================= -->
+<section id="events">
+  <div class="wrap">
+    <span class="stamp">Aktuelle Events</span>
+    <div class="event-grid" id="event-grid"></div>
+  </div>
+</section>
+
+<!-- ================= GALERIE ================= -->
+<section id="galerie">
+  <div class="wrap">
+    <span class="stamp">Fotos von Aktivitäten</span>
+    <p class="gallery-note">📷 Wir zeigen unser Quartier von seiner schönsten Seite – und achten dabei auf Privatsphäre: <strong>Fotos möglichst ohne erkennbare Gesichter</strong>. Motive wie Deko, Buffet, Lichterketten, Hände bei der Gartenarbeit oder Aufnahmen von hinten eignen sich perfekt.</p>
+    <div id="gallery-root"></div>
+    <p style="font-size:.9rem">Eigene Fotos einfügen: Bilder in einen Ordner wie <code>galerie/sommerfest-2026/</code> legen und im Skript unten bei <code>photos</code> eintragen.</p>
+  </div>
+</section>
+
+<!-- ================= BEITRITT ================= -->
+<section id="beitritt">
+  <div class="wrap">
+    <span class="stamp">Beitrittspaket</span>
+    <div class="join">
+      <div class="join-card">
+        <h3>Einzelmitgliedschaft</h3>
+        <!-- BETRÄGE: Platzhalter – bitte echte Beiträge eintragen -->
+        <div class="price">24 €<small> / Jahr</small></div>
+        <ul>
+          <li>Mitbestimmen bei allen Vereinsaktionen</li>
+          <li>Leihgeräte kostenlos nutzen</li>
+          <li>Einladung zu allen Festen &amp; Treffen</li>
+        </ul>
+        <a class="btn" href="mailto:gemeinsam-im-eco-quartier@web.de?subject=Beitritt%20Einzelmitgliedschaft">Beitritt anfragen</a>
+      </div>
+      <div class="join-card">
+        <h3>Haushalts&shy;mitgliedschaft</h3>
+        <div class="price">36 €<small> / Jahr</small></div>
+        <ul>
+          <li>Gilt für alle Personen eines Haushalts</li>
+          <li>Alle Vorteile der Einzelmitgliedschaft</li>
+          <li>Kinder feiern kostenlos mit</li>
+        </ul>
+        <a class="btn" href="mailto:gemeinsam-im-eco-quartier@web.de?subject=Beitritt%20Haushaltsmitgliedschaft">Beitritt anfragen</a>
+      </div>
+      <div class="join-card">
+        <h3>So geht's</h3>
+        <ul>
+          <li>Kurze Mail an uns – wir schicken das Beitrittsformular</li>
+          <li>Formular ausgefüllt zurücksenden</li>
+          <li>Willkommen im Verein! 🎉</li>
+        </ul>
+        <p style="font-size:.9rem">Später kann hier auch ein PDF-Beitrittsformular direkt zum Download verlinkt werden.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LEIHGERÄTE ================= -->
+<section id="leihgeraete">
+  <div class="wrap">
+    <span class="stamp">Leihgeräte</span>
+    <p style="margin-bottom:1.4rem">Teilen statt kaufen: Diese Geräte können Mitglieder kostenlos ausleihen.</p>
+    <div class="lend-grid" id="lend-grid"></div>
+    <p class="lend-hint">Ausleihen: kurze Mail an <a href="mailto:gemeinsam-im-eco-quartier@web.de?subject=Leihger%C3%A4t%20ausleihen">gemeinsam-im-eco-quartier@web.de</a> mit Gerät und Wunschtermin.</p>
+  </div>
+</section>
+
+<!-- ================= SPENDEN ================= -->
+<section id="spenden">
+  <div class="wrap">
+    <span class="stamp">Spenden</span>
+    <div class="donate">
+      <div>
+        <h3>Unterstütze unser Quartier</h3>
+        <p>Jeder Beitrag hilft uns, Feste, Pflanzaktionen und neue Leihgeräte für alle zu finanzieren. Vielen Dank für deine Unterstützung! Bitte gib als Verwendungszweck „Spende" und deine Adresse an, falls du eine Zuwendungsbestätigung möchtest.</p>
+      </div>
+      <dl class="bank">
+        <!-- BANKDATEN: Platzhalter – echte IBAN/BIC eintragen -->
+        <dt>Kontoinhaber</dt><dd>Gemeinsam im ecoQuartier Pfaffenhofen e.V.</dd>
+        <dt>IBAN</dt><dd>DE00 0000 0000 0000 0000 00</dd>
+        <dt>BIC</dt><dd>XXXXDEXXXXX</dd>
+        <dt>Verwendungszweck</dt><dd>Spende</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KONTAKT ================= -->
+<section id="kontakt">
+  <div class="wrap">
+    <span class="stamp">Kontakt</span>
+    <div class="contact-card">
+      <div>
+        <h3>E-Mail</h3>
+        <p><a href="mailto:gemeinsam-im-eco-quartier@web.de">gemeinsam-im-eco-quartier@web.de</a></p>
+      </div>
+      <div>
+        <h3>WhatsApp-Gruppe</h3>
+        <p>Aktuelle Infos und Aktionen in unserer Quartiersgruppe – Beitrittslink per Mail oder QR-Code auf unseren Aushängen.</p>
+      </div>
+      <div>
+        <h3>Vor Ort</h3>
+        <p>Ihr trefft uns bei allen Festen am Vorplatz Planetenhaus – sprecht uns einfach an!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Gemeinsam im ecoQuartier Pfaffenhofen e.V.</p>
+  <p><a href="#">Impressum</a>·<a href="#">Datenschutz</a></p>
+</footer>
+
+<script>
+/* =====================================================
+   DATEN – hier pflegt ihr die Inhalte
+   ===================================================== */
+
+/* ---- Event-Datenbank ---- */
+const EVENTS = [
+  {
+    title: "Sommerfest 2026",
+    date: "2026-07-18",
+    dateText: "Samstag, 18. Juli 2026, ab 16 Uhr",
+    location: "Vorplatz Planetenhaus",
+    description: "Unser gemeinsames Sommerfest mit Buffet, Salaten, Kuchen und Desserts. Getränke und Würstchensemmeln gegen Selbstkostenpreis – bitte eigenes Geschirr mitbringen! (Bei Regenwetter am 25. Juli 2026.)",
+    photos: [
+      // { src: "galerie/sommerfest-2026/lichterkette.jpg", caption: "Lichterkette am Abend" },
+    ]
+  },
+  {
+    title: "Herbst-Pflanzaktion",
+    date: "2026-10-10",
+    dateText: "Samstag, 10. Oktober 2026, ab 10 Uhr",
+    location: "Quartiersgarten",
+    description: "Beispiel-Eintrag: Gemeinsames Pflanzen von Blumenzwiebeln für das Frühjahr. Diesen Eintrag im Skript anpassen oder löschen.",
+    photos: []
+  }
+];
+
+/* ---- Leihgeräte-Datenbank ---- */
+const LEIHGERAETE = [
+  { icon: "🍺", name: "Bierzeltgarnitur (2×)", note: "Tisch + 2 Bänke, ideal für Feste" },
+  { icon: "🛺", name: "Bollerwagen", note: "Für Transporte im Quartier" },
+  { icon: "🔧", name: "Werkzeugkoffer", note: "Grundausstattung für kleine Reparaturen" },
+  { icon: "🌿", name: "Gartengeräte-Set", note: "Spaten, Rechen, Gießkannen" },
+  { icon: "📽️", name: "Beamer + Leinwand", note: "Für Filmabende und Vorträge" },
+  { icon: "🍽️", name: "Partygeschirr (40 Pers.)", note: "Teller, Becher, Besteck – spülmaschinenfest" }
+];
+
+/* =====================================================
+   Ab hier: Automatik – baut Events, Galerie, Leihgeräte
+   ===================================================== */
+const today = new Date().toISOString().slice(0, 10);
+
+/* Events */
+const grid = document.getElementById("event-grid");
+[...EVENTS].sort((a, b) => b.date.localeCompare(a.date)).forEach(ev => {
+  const past = ev.date < today;
+  const card = document.createElement("article");
+  card.className = "event-card" + (past ? " past" : "");
+  card.innerHTML = `
+    <div class="banner">${ev.title}</div>
+    <div class="event-body">
+      <div class="meta"><span class="label">Wann</span><span>${ev.dateText}</span></div>
+      <div class="meta"><span class="label">Wo</span><span>${ev.location}</span></div>
+      <p>${ev.description}</p>
+      ${past ? '<span class="tag-past">✔ hat stattgefunden – Fotos in der Galerie</span>' : ""}
+    </div>`;
+  grid.appendChild(card);
+});
+
+/* Galerie */
+const root = document.getElementById("gallery-root");
+EVENTS.filter(ev => ev.date < today).forEach(ev => {
+  const block = document.createElement("div");
+  block.className = "gallery-block";
+  const photos = ev.photos.length
+    ? ev.photos.map(p => `
+        <figure class="photo">
+          <img src="${p.src}" alt="${p.caption}" loading="lazy">
+          <figcaption class="cap">${p.caption}</figcaption>
+        </figure>`).join("")
+    : [1, 2, 3, 4].map(i => `
+        <div class="photo placeholder">
+          <span class="cap">Foto ${i} – eigenes Bild einfügen (ohne Gesichter)</span>
+        </div>`).join("");
+  block.innerHTML = `<h3>${ev.title}</h3><div class="photo-grid">${photos}</div>`;
+  root.appendChild(block);
+});
+
+/* Leihgeräte */
+const lend = document.getElementById("lend-grid");
+LEIHGERAETE.forEach(g => {
+  const card = document.createElement("div");
+  card.className = "lend-card";
+  card.innerHTML = `<span class="icon">${g.icon}</span>
+    <div><h4>${g.name}</h4><p>${g.note}</p></div>`;
+  lend.appendChild(card);
+});
+</script>
+</body>
+</html>
